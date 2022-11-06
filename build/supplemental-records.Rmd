@@ -95,7 +95,7 @@ concept_term <- term |>
   data.table::setDT()
 
 
-saveRDS(concept_term, 'data/data_src_thesaurus.rds')
+saveRDS(concept_term, 'data/data_scr_thesaurus.rds')
 ```
 
 ```{r}

@@ -37,7 +37,7 @@ readRDS('data/data_mesh_trees.rds') |>
 ### supplemental-terms
 
 ``` r
-readRDS('data/data_src_thesaurus.rds') |>
+readRDS('data/data_scr_thesaurus.rds') |>
   head() |> knitr::kable()
 ```
 
@@ -51,3 +51,21 @@ readRDS('data/data_src_thesaurus.rds') |>
 | C055240              | Leakadine                                | M0155620  | T185625 | Leakadine                                | Y                      | N                | TRD        | Y                     |
 
 ## Notes & useful links:
+
+-   [MeSH XML data
+    elements](https://www.nlm.nih.gov/mesh/xml_data_elements.html)
+
+-   Supplementary Concept Records
+
+> SCR records are created for some chemicals, drugs, and other concepts
+> such as rare diseases. They are labeled as “MeSH Supplementary Concept
+> Data” and the unique ID begins with the letter “C.”
+
+> Supplementary Concept Records - these are not full MeSH Headings and
+> do not fall under the MeSH tree hierarchy. Many times they are used to
+> identify substances that are not included in the MeSH terms.
+
+> These do not belong to the controlled vocabulary as such and are not
+> used for indexing MEDLINE articles; instead they enlarge the thesaurus
+> and contain links to the closest fitting descriptor to be used in a
+> MEDLINE search. Many of these records describe chemical substances.

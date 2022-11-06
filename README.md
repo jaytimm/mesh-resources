@@ -1,10 +1,8 @@
-## Some convenient extensions to MeSH
+# Some convenient extensions to MeSH
 
-### RMDs
+## Datasets
 
-### Datasets
-
--   descriptor-terms
+### descriptor-terms
 
 ``` r
 readRDS('data/data_mesh_thesaurus.rds') |>
@@ -20,7 +18,7 @@ readRDS('data/data_mesh_thesaurus.rds') |>
 | D000001      | Calcimycin     | M0353609  | T000003 | Antibiotic A23187  | N                      | N                | NON        | N                     |
 | D000001      | Calcimycin     | M0353609  | T000003 | A23187, Antibiotic | N                      | Y                | NON        | N                     |
 
--   tree-numbers
+### tree-numbers
 
 ``` r
 readRDS('data/data_mesh_trees.rds') |>
@@ -36,7 +34,7 @@ readRDS('data/data_mesh_trees.rds') |>
 | D000003      | Abattoirs      | J01.576.423.200.700.100 | J    | Technology, Industry, and Agriculture | Technology, Industry, and Agriculture     | Industry                                | J01   | J01.576 |
 | D000003      | Abattoirs      | J03.540.020             | J    | Technology, Industry, and Agriculture | Non-Medical Public and Private Facilities | Manufacturing and Industrial Facilities | J03   | J03.540 |
 
--   supplemental-terms
+### supplemental-terms
 
 ``` r
 readRDS('data/data_src_thesaurus.rds') |>
@@ -52,4 +50,4 @@ readRDS('data/data_src_thesaurus.rds') |>
 | C002540              | miracil A                                | M0043189  | T073192 | miracil A                                | Y                      | N                | NON        | Y                     |
 | C055240              | Leakadine                                | M0155620  | T185625 | Leakadine                                | Y                      | N                | TRD        | Y                     |
 
-### Notes & useful links:
+## Notes & useful links:

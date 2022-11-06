@@ -4,17 +4,12 @@ output:
     variant: markdown_github
 ---
 
-## Some convenient extensions to MeSH
+# Some convenient extensions to MeSH
 
 
+## Datasets
 
-
-### RMDs
-
-
-### Datasets
-
-* descriptor-terms
+### descriptor-terms
 
 ```{r}
 readRDS('data/data_mesh_thesaurus.rds') |>
@@ -22,14 +17,14 @@ readRDS('data/data_mesh_thesaurus.rds') |>
 ```
 
 
-* tree-numbers
+### tree-numbers
 
 ```{r}
 readRDS('data/data_mesh_trees.rds') |>
   head() |> knitr::kable()
 ```
 
-* supplemental-terms
+### supplemental-terms
 
 ```{r}
 readRDS('data/data_src_thesaurus.rds') |>
@@ -37,7 +32,7 @@ readRDS('data/data_src_thesaurus.rds') |>
 ```
 
 
-### Notes & useful links:
+## Notes & useful links:
 
 
 

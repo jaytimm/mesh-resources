@@ -1,0 +1,90 @@
+---
+title: "Untitled"
+output: html_document
+date: '2022-11-05'
+---
+
+
+trees
+
+
+```{r eval=FALSE}
+library(dplyr)
+tree <- 'download/mtrees2022.bin' |>
+  gzfile() |>
+  read.csv(header = FALSE, sep =';') |>
+  rename(DescriptorName = V1,
+         tree_location = V2) |>
+  select(tree_location, DescriptorName)
+
+# Extract the two highest parent nodes from tree location.  
+## For general classification purposes.  
+level1 <- tree[nchar(tree$tree_location) == 3, ]
+level2 <- tree[nchar(tree$tree_location) == 7, ] |>
+  mutate(join = gsub('\\....', '', tree_location))
+
+top_parents <- level2 |>
+  left_join(level1, by = c('join' = 'tree_location'))
+
+colnames(top_parents) <- c('tree2', 'mesh2', 'tree1', 'mesh1')
+top_parents <- top_parents[, c(3:4, 1:2)]
+
+
+ cats <- c('Anatomy', 
+          'Organisms', 
+          'Diseases', 
+          'Chemicals and Drugs',
+          'Analytical, Diagnostic and Therapeutic Techniques, and Equipment', 
+          'Psychiatry and Psychology', 
+          'Phenomena and Processes',
+          'Disciplines and Occupations',
+          'Anthropology, Education, Sociology, and Social Phenomena', 
+          'Technology, Industry, and Agriculture', 
+          'Humanities',
+          'Information Science',
+          'Named Groups',
+          'Health Care',
+          'Publication Characteristics',
+          'Geographicals')
+
+code <- c(LETTERS[1:14], 'V', 'Z')
+
+high_tree <- data.frame(code, cats)
+
+
+## previously meta -- need to add descriptor names to this -- 
+meta <- top_parents |>
+  mutate(code = gsub('..$', '', tree1)) |>
+  left_join(high_tree) |>
+  select(code:cats, tree1:mesh2) |>
+  data.table::setDT()
+
+# saveRDS(mesh_trees, 'data/data_mesh_trees.rds')
+```
+
+
+
+```{r}
+mesh <- readRDS('data/data_mesh_thesaurus.rds')
+
+### 2-5 Join metadata & descriptors/terms
+big_tree <- mesh %>%
+  left_join(tree) %>%
+  mutate (tree2 = substring(tree_location, 1, 7)) %>%
+  
+  left_join(meta) %>%
+  
+  select(DescriptorUI, DescriptorName, 
+         tree_location, 
+         code, cats,
+         mesh1, mesh2,
+         tree1, tree2) %>%
+  
+  distinct() |>
+  na.omit() |>
+  mutate_if(is.character, trimws)|>
+  mutate_if(is.character, enc2utf8)
+
+saveRDS(big_tree, 'data/data_mesh_trees.rds')
+```
+

@@ -1,16 +1,28 @@
 ---
-title: "Untitled"
-output: html_document
-date: '2022-11-05'
+output:
+  md_document:
+    variant: markdown_github
 ---
 
+## Some convenient extensions to MeSH
 
-"User-friendly extensions to MeSH"
+
 
 
 ### RMDs
 
+
 ### Datasets
 
-### Notes
+* descriptor-terms
+
+* tree-numbers
+
+* supplemental-terms
+
+
+
+### Notes & useful links:
+
+
 

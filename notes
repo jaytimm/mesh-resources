@@ -1,0 +1,75 @@
+
+
+<https://github.com/dhimmel/mesh> VERY NICE -- python and dated but
+exactly what we want to do --
+
+descriptor-terms file as supplemntal-terms file --
+
+![](images/mesh.png)
+
+<https://www.nlm.nih.gov/pubs/techbull/nd03/nd03_map_to.html> Very
+helpful but very dated --
+
+<https://hhs.github.io/meshrdf/scrs> sparql examples -- rdf structure --
+
+Semantic types:
+<https://www.nlm.nih.gov/research/umls/new_users/online_learning/SEM_003.html>
+
+Supplementary Records, also called Supplementary Chemical Records(SCRs),
+are used to index chemicals, drugs, and other concepts such as rare
+diseases for MEDLINE and are searchable by Substance Name [NM] in
+PubMed. Unlike Descriptors, SCRs are not organised in a tree hierarchy.
+
+In addition to the descriptors, MeSH also contains some 139,000
+Supplementary Concept Records. These do not belong to the controlled
+vocabulary as such and are not used for indexing MEDLINE articles;
+instead they enlarge the thesaurus and contain links to the closest
+fitting descriptor to be used in a MEDLINE search. Many of these records
+describe chemical substances.
+
+Supplementary Concept Records (SCR)
+
+SCR records are created for some chemicals, drugs, and other concepts
+such as rare diseases. They are labeled as "MeSH Supplementary Concept
+Data" and the unique ID begins with the letter "C." Generally, these
+terms are lower-cased. *They have two tabs: Details and Concepts.*
+
+Catalogers are not permitted to use these terms and instead should use
+the descriptor(s) listed under Heading Mapped to
+
+Supplementary Concept Records (SCOs) - these are not full MeSH Headings
+and do not fall under the MeSH tree hierarchy. Many times they are used
+to identify substances that are not included in the MeSH terms.
+
+Medical Subject Headings (MeSH®) controlled vocabulary contains
+Supplementary Concept Records (SCRs) in addition to Main Headings (also
+called Descriptors) and Subheadings (also called Qualifiers). MEDLINE
+indexers regularly come across substances in the literature that are not
+currently MeSH headings. When this happens, NLM staff adds these
+substances to the MeSH vocabulary as Supplementary Concept Records
+(SCRs). While MeSH headings are updated annually, new SCRs are added
+weekly...
+
+Note: Not all Supplementary Concepts are substances. There are also
+terms for diseases and protocols included in MeSH as SCRs."
+
+The NLM does not supply the SCRs to Dialog as part of the Medline MeSH
+Thesaurus, so there is no option available to present those terms within
+the Dialog Medline Thesaurus. But the SCRs are supplied to Dialog
+separately and so the work-around here is to search the SCR term(s)
+directly in the Dialog Medline subject field SUBT to retrieve adequate
+results in reference to a same search of selected SCRs in PubMed.
+
+<https://www.nlm.nih.gov/mesh/xml_data_elements.html>
+
+<CASN1Name> Description: Chemical Abstracts Type N1 Name. A free-text
+element containing the systematic name used in the Chemical Abstracts
+Chemical Substance and Formula Indexes. The systematic name is a unique
+name assigned to a chemical substance to represent its structure. First
+available for Descriptors in 1995. Example:
+
+SupplementalRecordUI SupplementalRecordName SCRClass C114158 quantum dye
+macrocyclic europium-chelate 1 C008718 osteoclast activating factor 1
+C008720 otoline 1 C002540 miracil A 1 C060863 conduritol aziridine 1
+C008725 1-oxacephalothin 1 C008726 15-oxaestrone 1 C008727 oxaluric acid
+1 C414549 MB21 peptide 1

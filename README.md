@@ -68,27 +68,29 @@ readRDS('data/data_scr_thesaurus.rds') |>
 
 -   Supplementary Concept Records
 
-> SCR records are created for some chemicals, drugs, and other concepts
+> ‘SCR records are created for some chemicals, drugs, and other concepts
 > such as rare diseases. They are labeled as “MeSH Supplementary Concept
-> Data” and the unique ID begins with the letter “C.”
+> Data” and the unique ID begins with the letter “C.”’
 
-> Supplementary Concept Records - these are not full MeSH Headings and
+> ‘Supplementary Concept Records - these are not full MeSH Headings and
 > do not fall under the MeSH tree hierarchy. Many times they are used to
-> identify substances that are not included in the MeSH terms.
+> identify substances that are not included in the MeSH terms.’
 
-> These do not belong to the controlled vocabulary as such and are not
+> ‘These do not belong to the controlled vocabulary as such and are not
 > used for indexing MEDLINE articles; instead they enlarge the thesaurus
 > and contain links to the closest fitting descriptor to be used in a
-> MEDLINE search. Many of these records describe chemical substances.
+> MEDLINE search. Many of these records describe chemical substances.’
 
 -   [descriptor-terms file
     download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
-    – as `descYYYY.gz`
+    – as `desc20YY.gz`
 
 -   [tree file
     download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
-    – `mtreesYYY.gz`
+    – `mtrees20YY.gz`
 
 -   [supplemental-terms file
     download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
-    – as `suppYYY.gz`
+    – as `supp20YY.gz`
+
+-   [Utility functions](https://github.com/scienceai/mesh-tree) –

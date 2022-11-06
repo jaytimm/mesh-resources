@@ -16,10 +16,25 @@ output:
 
 * descriptor-terms
 
+```{r}
+readRDS('data/data_mesh_thesaurus.rds') |>
+  head() |> knitr::kable()
+```
+
+
 * tree-numbers
+
+```{r}
+readRDS('data/data_mesh_trees.rds') |>
+  head() |> knitr::kable()
+```
 
 * supplemental-terms
 
+```{r}
+readRDS('data/data_src_thesaurus.rds') |>
+  head() |> knitr::kable()
+```
 
 
 ### Notes & useful links:

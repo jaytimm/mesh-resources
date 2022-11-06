@@ -1,13 +1,19 @@
 # Some convenient extensions to MeSH
 
-MeSH (Medical Subject Headings) is a NLM controlled vocabulary
-thesaurus. The resource is structured as an ontology and is used for
-indexing articles for PubMed. Data sets included here provide more
-convenient access to this vocabulary as simple tables (in `rds` format).
+[MeSH](https://www.ncbi.nlm.nih.gov/mesh) (Medical Subject Headings) is
+a NLM controlled vocabulary thesaurus. MeSH is structured as an ontology
+and is used for indexing articles for PubMed. Data sets included here
+provide more convenient access to this vocabulary as simple tables (in
+`rds` format).
+
+R-based build process are detailed
+[here](https://github.com/jaytimm/mesh-builds/tree/main/build). Raw data
+from MeSH have been included
+[here](https://github.com/jaytimm/mesh-builds/tree/main/download).
 
 ## Datasets
 
-### descriptor-terms
+### `descriptor-terms`
 
 ``` r
 readRDS('data/data_mesh_thesaurus.rds') |>
@@ -23,7 +29,7 @@ readRDS('data/data_mesh_thesaurus.rds') |>
 | D000001      | Calcimycin     | M0353609  | T000003 | Antibiotic A23187  | N                      | N                | NON        | N                     |
 | D000001      | Calcimycin     | M0353609  | T000003 | A23187, Antibiotic | N                      | Y                | NON        | N                     |
 
-### tree-numbers
+### `tree-numbers`
 
 ``` r
 readRDS('data/data_mesh_trees.rds') |>
@@ -39,7 +45,7 @@ readRDS('data/data_mesh_trees.rds') |>
 | D000003      | Abattoirs      | J01.576.423.200.700.100 | J    | Technology, Industry, and Agriculture | Technology, Industry, and Agriculture     | Industry                                | J01   | J01.576 |
 | D000003      | Abattoirs      | J03.540.020             | J    | Technology, Industry, and Agriculture | Non-Medical Public and Private Facilities | Manufacturing and Industrial Facilities | J03   | J03.540 |
 
-### supplemental-terms
+### `supplemental-terms`
 
 ``` r
 readRDS('data/data_scr_thesaurus.rds') |>

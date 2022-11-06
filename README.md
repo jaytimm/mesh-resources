@@ -81,11 +81,14 @@ readRDS('data/data_scr_thesaurus.rds') |>
 > and contain links to the closest fitting descriptor to be used in a
 > MEDLINE search. Many of these records describe chemical substances.
 
--   [descriptor-terms](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
-    file download – as `descYYYY.gz`
+-   [descriptor-terms file
+    download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
+    – as `descYYYY.gz`
 
--   [tree](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
-    file download
+-   [tree file
+    download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
+    – `mtreesYYY.gz`
 
--   [supplemental-terms](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
-    file download – as `suppYYY.gz`
+-   [supplemental-terms file
+    download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
+    – as `suppYYY.gz`

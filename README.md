@@ -29,7 +29,7 @@ readRDS('data/data_mesh_thesaurus.rds') |>
 | D000001      | Calcimycin     | M0353609  | T000003 | Antibiotic A23187  | N                      | N                | NON        | N                     |
 | D000001      | Calcimycin     | M0353609  | T000003 | A23187, Antibiotic | N                      | Y                | NON        | N                     |
 
-### `tree-numbers`
+### `descriptor-tree-numbers`
 
 ``` r
 readRDS('data/data_mesh_trees.rds') |>
@@ -80,3 +80,12 @@ readRDS('data/data_scr_thesaurus.rds') |>
 > used for indexing MEDLINE articles; instead they enlarge the thesaurus
 > and contain links to the closest fitting descriptor to be used in a
 > MEDLINE search. Many of these records describe chemical substances.
+
+-   [descriptor-terms](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
+    file download – as `descYYYY.gz`
+
+-   [tree](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
+    file download
+
+-   [supplemental-terms](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
+    file download – as `suppYYY.gz`

@@ -1,5 +1,10 @@
 # Some convenient extensions to MeSH
 
+MeSH (Medical Subject Headings) is a NLM controlled vocabulary
+thesaurus. The resource is structured as an ontology and is used for
+indexing articles for PubMed. Data sets included here provide more
+convenient access to this vocabulary as simple tables (in `rds` format).
+
 ## Datasets
 
 ### descriptor-terms

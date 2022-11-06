@@ -66,6 +66,8 @@ readRDS('data/data_scr_thesaurus.rds') |>
 -   [MeSH XML data
     elements](https://www.nlm.nih.gov/mesh/xml_data_elements.html)
 
+-   XML elements as [RDF](https://id.nlm.nih.gov/mesh/D000001.html)
+
 -   Supplementary Concept Records
 
 > ‘SCR records are created for some chemicals, drugs, and other concepts
@@ -87,10 +89,12 @@ readRDS('data/data_scr_thesaurus.rds') |>
 
 -   [tree file
     download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
-    – `mtrees20YY.gz`
+    – as `mtrees20YY.gz`
 
 -   [supplemental-terms file
     download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
     – as `supp20YY.gz`
 
 -   [Utility functions](https://github.com/scienceai/mesh-tree) –
+
+## Working examples:

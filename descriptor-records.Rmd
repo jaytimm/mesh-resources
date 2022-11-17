@@ -1,0 +1,76 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+
+```{r eval=FALSE}
+library(dplyr)
+desc <- 'download/desc2022.gz' |> gzfile() |> xml2::read_xml()
+
+DescriptorUI <- desc |> 
+  xml2::xml_find_all('.//DescriptorUI') |> 
+  xml2::xml_text()
+
+DescriptorName <- desc |> 
+  xml2::xml_find_all('.//DescriptorName') |>  
+  xml2::xml_text() 
+
+descriptor <- data.frame(DescriptorUI, DescriptorName) |>
+  distinct() |> 
+  arrange(DescriptorUI)
+
+rpt <- desc |> 
+  xml2::xml_find_all('.//Term') |> 
+  xml2::xml_attrs() 
+
+rpt0 <- do.call(rbind.data.frame, rpt)
+colnames(rpt0) <- names(rpt[[1]])
+
+## Concepts
+ConceptName <- desc |> 
+  xml2::xml_find_all('.//ConceptName') |>  
+  xml2::xml_text()
+
+ConceptUI <- desc |> 
+  xml2::xml_find_all('.//ConceptUI') |>  
+  xml2::xml_text()
+
+concept <- data.frame(ConceptUI, ConceptName)
+
+## Terms
+TermUI <- desc |> 
+  xml2::xml_find_all('.//TermUI') |>  
+  xml2::xml_text() 
+
+TermName <- desc |> xml2::xml_find_all('.//Term') |>  
+  xml2::xml_find_all('String') |>
+  xml2::xml_text()
+
+term <- data.frame(TermUI, TermName, rpt0) 
+
+concept_term <- term |>
+  
+  left_join(concept, by = c('TermName' = 'ConceptName')) |>
+  tidyr::fill(ConceptUI) |>
+  
+  left_join(descriptor, by = c('TermName' = 'DescriptorName')) |>
+  
+  mutate(DescriptorName = ifelse(is.na(DescriptorUI), NA, TermName)) |>
+  
+  tidyr::fill(DescriptorUI, DescriptorName) |>
+  select(DescriptorUI, DescriptorName, ConceptUI,
+         TermUI, TermName, 
+         ConceptPreferredTermYN:RecordPreferredTermYN) |>
+  
+  data.table::setDT()
+
+
+saveRDS(concept_term, 'data/data_mesh_thesaurus.rds')
+```
+

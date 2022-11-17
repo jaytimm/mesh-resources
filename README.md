@@ -1,16 +1,5 @@
 # Some convenient extensions to MeSH
 
-[MeSH](https://www.ncbi.nlm.nih.gov/mesh) (Medical Subject Headings) is
-a NLM controlled vocabulary thesaurus. MeSH is structured as an ontology
-and is used for indexing articles for PubMed. Data sets included here
-provide more convenient access to this vocabulary as simple tables (in
-`rds` format).
-
-R-based build process are detailed
-[here](https://github.com/jaytimm/mesh-builds/tree/main/build). Raw data
-from MeSH have been included
-[here](https://github.com/jaytimm/mesh-builds/tree/main/download).
-
 ## Datasets
 
 ### `descriptor-terms`
@@ -96,5 +85,3 @@ readRDS('data/data_scr_thesaurus.rds') |>
     – as `supp20YY.gz`
 
 -   [Utility functions](https://github.com/scienceai/mesh-tree) –
-
-## Working examples:

@@ -4,6 +4,9 @@
 
 ### `descriptor-terms`
 
+[Raw
+data](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
+
 ``` r
 readRDS('data/data_mesh_thesaurus.rds') |>
   head() |> knitr::kable()
@@ -20,6 +23,9 @@ readRDS('data/data_mesh_thesaurus.rds') |>
 
 ### `descriptor-tree-numbers`
 
+[Raw
+data](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
+
 ``` r
 readRDS('data/data_mesh_trees.rds') |>
   head() |> knitr::kable()
@@ -35,6 +41,9 @@ readRDS('data/data_mesh_trees.rds') |>
 | D000003      | Abattoirs      | J03.540.020             | J    | Technology, Industry, and Agriculture | Non-Medical Public and Private Facilities | Manufacturing and Industrial Facilities | J03   | J03.540 |
 
 ### `supplemental-terms`
+
+[Raw
+data](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
 
 ``` r
 readRDS('data/data_scr_thesaurus.rds') |>
@@ -57,6 +66,8 @@ readRDS('data/data_scr_thesaurus.rds') |>
 
 -   XML elements as [RDF](https://id.nlm.nih.gov/mesh/D000001.html)
 
+-   [Utility functions](https://github.com/scienceai/mesh-tree)
+
 -   Supplementary Concept Records
 
 > ‘SCR records are created for some chemicals, drugs, and other concepts
@@ -71,17 +82,3 @@ readRDS('data/data_scr_thesaurus.rds') |>
 > used for indexing MEDLINE articles; instead they enlarge the thesaurus
 > and contain links to the closest fitting descriptor to be used in a
 > MEDLINE search. Many of these records describe chemical substances.’
-
--   [descriptor-terms file
-    download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
-    – as `desc20YY.gz`
-
--   [tree file
-    download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
-    – as `mtrees20YY.gz`
-
--   [supplemental-terms file
-    download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
-    – as `supp20YY.gz`
-
--   [Utility functions](https://github.com/scienceai/mesh-tree) –

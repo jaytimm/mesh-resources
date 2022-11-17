@@ -6,9 +6,13 @@ output:
 
 # Some convenient extensions to MeSH
 
+
+
 ## Datasets
 
 ### `descriptor-terms`
+
+[Raw data](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
 
 ```{r}
 readRDS('data/data_mesh_thesaurus.rds') |>
@@ -18,12 +22,17 @@ readRDS('data/data_mesh_thesaurus.rds') |>
 
 ### `descriptor-tree-numbers`
 
+[Raw data](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/)
+
 ```{r}
 readRDS('data/data_mesh_trees.rds') |>
   head() |> knitr::kable()
 ```
 
+
 ### `supplemental-terms`
+
+[Raw data](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/)
 
 ```{r}
 readRDS('data/data_scr_thesaurus.rds') |>
@@ -31,11 +40,14 @@ readRDS('data/data_scr_thesaurus.rds') |>
 ```
 
 
+
 ## Notes & useful links:
 
 * [MeSH XML data elements](https://www.nlm.nih.gov/mesh/xml_data_elements.html)
 
 * XML elements as [RDF](https://id.nlm.nih.gov/mesh/D000001.html)
+
+* [Utility functions](https://github.com/scienceai/mesh-tree)
 
 * Supplementary Concept Records
 
@@ -48,14 +60,4 @@ and do not fall under the MeSH tree hierarchy. Many times they are used
 to identify substances that are not included in the MeSH terms.'
 
 > 'These do not belong to the controlled vocabulary as such and are not used for indexing MEDLINE articles; instead they enlarge the thesaurus and contain links to the closest fitting descriptor to be used in a MEDLINE search. Many of these records describe chemical substances.'
-
-
-* [descriptor-terms file download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/) -- as `desc20YY.gz`
-
-* [tree file download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/) -- as `mtrees20YY.gz` 
-
-* [supplemental-terms file download](https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/) -- as `supp20YY.gz`
-
-* [Utility functions](https://github.com/scienceai/mesh-tree) -- 
-
 

@@ -40,6 +40,15 @@ readRDS('data/data_scr_thesaurus.rds') |>
 ```
 
 
+## Pharmacological Actions
+
+```{r}
+readRDS('data/data_PharmacologicalActions.rds') |>
+  head() |> knitr::kable()
+```
+
+
+
 
 ## Notes & useful links:
 

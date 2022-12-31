@@ -50,14 +50,30 @@ readRDS('data/data_scr_thesaurus.rds') |>
   head() |> knitr::kable()
 ```
 
-| SupplementalRecordUI | SupplementalRecordName                   | ConceptUI | TermUI  | TermName                                 | ConceptPreferredTermYN | IsPermutedTermYN | LexicalTag | RecordPreferredTermYN |
-|:-------|:--------------|:----|:---|:--------------|:--------|:------|:----|:--------|
-| C114158              | quantum dye macrocyclic europium-chelate | M0294520  | T324525 | quantum dye macrocyclic europium-chelate | Y                      | N                | NON        | Y                     |
-| C114158              | quantum dye macrocyclic europium-chelate | M0294520  | T324524 | QD macrocyclic                           | N                      | N                | NON        | N                     |
-| C008718              | osteoclast activating factor             | M0052808  | T082811 | osteoclast activating factor             | Y                      | N                | NON        | Y                     |
-| C008720              | otoline                                  | M0052812  | T082815 | otoline                                  | Y                      | N                | NON        | Y                     |
-| C002540              | miracil A                                | M0043189  | T073192 | miracil A                                | Y                      | N                | NON        | Y                     |
-| C055240              | Leakadine                                | M0155620  | T185625 | Leakadine                                | Y                      | N                | TRD        | Y                     |
+| DescriptorUI | DescriptorName                           | ConceptUI | TermUI  | TermName                                 | ConceptPreferredTermYN | IsPermutedTermYN | LexicalTag | RecordPreferredTermYN |
+|:-----|:--------------|:----|:---|:--------------|:--------|:------|:----|:--------|
+| C114158      | quantum dye macrocyclic europium-chelate | M0294520  | T324525 | quantum dye macrocyclic europium-chelate | Y                      | N                | NON        | Y                     |
+| C114158      | quantum dye macrocyclic europium-chelate | M0294520  | T324524 | QD macrocyclic                           | N                      | N                | NON        | N                     |
+| C008718      | osteoclast activating factor             | M0052808  | T082811 | osteoclast activating factor             | Y                      | N                | NON        | Y                     |
+| C008720      | otoline                                  | M0052812  | T082815 | otoline                                  | Y                      | N                | NON        | Y                     |
+| C002540      | miracil A                                | M0043189  | T073192 | miracil A                                | Y                      | N                | NON        | Y                     |
+| C055240      | Leakadine                                | M0155620  | T185625 | Leakadine                                | Y                      | N                | TRD        | Y                     |
+
+## Pharmacological Actions
+
+``` r
+readRDS('data/data_PharmacologicalActions.rds') |>
+  head() |> knitr::kable()
+```
+
+| DescriptorUI | DescriptorName | PharmActionUI | PharmActionName         |
+|:-------------|:---------------|:--------------|:------------------------|
+| D000001      | Calcimycin     | D000900       | Anti-Bacterial Agents   |
+| D000001      | Calcimycin     | D061207       | Calcium Ionophores      |
+| D000002      | Temefos        | D007306       | Insecticides            |
+| D000040      | Abscisic Acid  | D010937       | Plant Growth Regulators |
+| D000068180   | Aripiprazole   | D000928       | Antidepressive Agents   |
+| D000068180   | Aripiprazole   | D014150       | Antipsychotic Agents    |
 
 ## Notes & useful links:
 

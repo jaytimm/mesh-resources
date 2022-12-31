@@ -61,6 +61,9 @@ readRDS('data/data_scr_thesaurus.rds') |>
 
 ## Pharmacological Actions
 
+> For drugs included in both MeSH-proper and Supplementary Concept
+> Records.
+
 ``` r
 readRDS('data/data_PharmacologicalActions.rds') |>
   head() |> knitr::kable()

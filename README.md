@@ -65,7 +65,7 @@ readRDS('data/data_scr_thesaurus.rds') |>
 > Records.
 
 ``` r
-readRDS('data/data_PharmacologicalActions.rds') |>
+readRDS('data/data_pharm_action.rds') |>
   head() |> knitr::kable()
 ```
 

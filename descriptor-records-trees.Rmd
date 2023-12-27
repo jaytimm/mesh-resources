@@ -1,0 +1,350 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+```{r}
+library(dplyr)
+out_dir <- '/home/jtimm/pCloudDrive/GitHub/packages/mesh-builds/data'
+year <- 2024
+
+desc_url <- paste0('https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/desc', year, '.gz')
+supp_url <- paste0('https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/supp', year, '.gz')
+trees_url <- paste0('https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/mtrees', year, '.bin')
+```
+
+
+## descriptor-terms
+
+```{r eval=FALSE}
+temp <- tempdir()
+desc_zip_name <- paste0(temp, '/', basename(desc_url))
+download.file(desc_url, 
+              desc_zip_name,
+              quiet = TRUE)
+
+desc <- desc_zip_name |> gzfile() |> xml2::read_xml()
+unlink(temp)
+
+
+DescriptorUI <- desc |> 
+  xml2::xml_find_all('.//DescriptorUI') |> 
+  xml2::xml_text()
+
+DescriptorName <- desc |> 
+  xml2::xml_find_all('.//DescriptorName') |>  
+  xml2::xml_text() 
+
+descriptor99 <- data.frame(DescriptorUI, DescriptorName) |>
+  distinct() |> 
+  arrange(DescriptorUI)
+
+rpt <- desc |> 
+  xml2::xml_find_all('.//Term') |> 
+  xml2::xml_attrs() 
+
+rpt0 <- do.call(rbind.data.frame, rpt)
+colnames(rpt0) <- names(rpt[[1]])
+
+## Concepts
+ConceptName <- desc |> 
+  xml2::xml_find_all('.//ConceptName') |>  
+  xml2::xml_text()
+
+ConceptUI <- desc |> 
+  xml2::xml_find_all('.//ConceptUI') |>  
+  xml2::xml_text()
+
+concept <- data.frame(ConceptUI, ConceptName)
+
+## Terms
+TermUI <- desc |> 
+  xml2::xml_find_all('.//TermUI') |>  
+  xml2::xml_text() 
+
+TermName <- desc |> xml2::xml_find_all('.//Term') |>  
+  xml2::xml_find_all('String') |>
+  xml2::xml_text()
+
+term <- data.frame(TermUI, TermName, rpt0) 
+
+descriptor_terms <- term |>
+  
+  left_join(concept, by = c('TermName' = 'ConceptName')) |>
+  tidyr::fill(ConceptUI) |>
+  
+  left_join(descriptor99, by = c('TermName' = 'DescriptorName')) |>
+  
+  mutate(DescriptorName = ifelse(is.na(DescriptorUI), NA, TermName)) |>
+  
+  tidyr::fill(DescriptorUI, DescriptorName) |>
+  select(DescriptorUI, DescriptorName, ConceptUI,
+         TermUI, TermName, 
+         ConceptPreferredTermYN:RecordPreferredTermYN) |>
+  
+  data.table::setDT()
+```
+
+
+## supplemental-terms
+
+> Note: `descriptor-terms` + `supplemental-terms` happens in script -- 
+
+```{r eval=FALSE}
+temp <- tempdir()
+supp_zip_name <- paste0(temp, '/', basename(supp_url))
+download.file(supp_url, 
+              supp_zip_name,
+              quiet = TRUE)
+
+supps <- supp_zip_name |> gzfile() |> xml2::read_xml()
+unlink(temp)
+
+
+## SupplementalRecordUI	SupplementalRecordName	SCRClass
+SupplementalRecord <- supps %>%
+  xml2::xml_find_all('.//SupplementalRecord')
+
+srui <- SupplementalRecord |> 
+  xml2::xml_find_all('.//SupplementalRecordUI') |> 
+  xml2::xml_text()
+
+class <- SupplementalRecord |> 
+  # xml2::xml_find_all('.//SCRClass') |> 
+  # xml2::xml_text()
+  xml2::xml_attrs() 
+
+
+SupplementalRecordUI <- supps |> 
+  xml2::xml_find_all('.//SupplementalRecordUI') |> 
+  xml2::xml_text()
+
+SupplementalRecordName <- supps |> 
+  xml2::xml_find_all('.//SupplementalRecordName') |>  
+  xml2::xml_text() 
+
+descriptor <- data.frame(SupplementalRecordUI, SupplementalRecordName) |>
+  distinct() |> 
+  arrange(SupplementalRecordUI)
+
+
+rpt <- supps |> 
+  xml2::xml_find_all('.//Term') |> 
+  xml2::xml_attrs() 
+
+rpt0 <- do.call(rbind.data.frame, rpt)
+colnames(rpt0) <- names(rpt[[1]])
+
+## Terms
+TermUI <- supps |> 
+  xml2::xml_find_all('.//TermUI') |>  
+  xml2::xml_text() 
+
+TermName <- supps |> 
+  xml2::xml_find_all('.//Term') |>  
+  xml2::xml_find_all('String') |>
+  xml2::xml_text()
+
+term <- data.frame(TermUI, TermName, rpt0) 
+
+
+## Concepts
+ConceptName <- supps |> 
+  xml2::xml_find_all('.//ConceptName') |>  
+  xml2::xml_text()
+
+ConceptUI <- supps |> 
+  xml2::xml_find_all('.//ConceptUI') |>  
+  xml2::xml_text()
+
+concept <- data.frame(ConceptUI, ConceptName)
+
+
+remove(SupplementalRecordUI, SupplementalRecordName,
+       rpt, rpt0)
+
+
+supplemental_terms <- term |>
+  
+  left_join(concept, by = c('TermName' = 'ConceptName')) |>
+  tidyr::fill(ConceptUI) |>
+  
+  left_join(descriptor, by = c('TermName' = 'SupplementalRecordName')) |>
+  
+  mutate(SupplementalRecordName = ifelse(is.na(SupplementalRecordUI), NA, TermName)) |>
+  
+  tidyr::fill(SupplementalRecordUI, SupplementalRecordName) |>
+  
+  select(SupplementalRecordUI, SupplementalRecordName, ConceptUI,
+         TermUI, TermName, 
+         ConceptPreferredTermYN:RecordPreferredTermYN) |>
+  
+  ## bind_cols(rpt0) |>
+  data.table::setDT()
+
+colnames(supplemental_terms) <- colnames(descriptor_terms)
+```
+
+
+
+
+## pharmacological-actions
+
+```{r}
+library(xml2)
+
+sr1 <- SupplementalRecord |> 
+  xml2::xml_find_all('.//PharmacologicalActionList') 
+
+srps <- sr1 |> xml2::xml_parents() 
+
+srps0 <- srps |>
+  xml2::xml_find_first('.//SupplementalRecordUI') |>  
+  xml2::xml_text()
+
+names(srps) <- srps0
+
+srps2 <- srps |>
+  xml2::xml_find_first('.//PharmacologicalActionList')
+
+xx <- lapply(srps2, function(x) {
+  xml2::xml_find_all(x, './/DescriptorUI') |> xml2::xml_text()
+})
+
+
+## this is good -- 
+DescriptorRecord <- desc |> 
+  xml2::xml_find_all('.//DescriptorRecord')
+names(DescriptorRecord) <- descriptor99$DescriptorUI
+dr1 <- DescriptorRecord |>
+  xml2::xml_find_all('.//PharmacologicalActionList') 
+
+xx1 <- lapply(dr1, function(x) {
+  xml2::xml_find_all(x, './/DescriptorUI') |> xml2::xml_text()
+})
+
+
+# mesh <- pubmedr::data_mesh_thesuarus() |>
+#   select(DescriptorName, DescriptorUI) |>
+#   unique()
+
+pharm_actions <- textshape::tidy_list(c(xx1, xx),
+                                      id.name = 'DescriptorUI',
+                                      content.name = 'PharmacologicalAction') |> 
+  
+  left_join(descriptor99, by = c('DescriptorUI')) |>
+  left_join(descriptor99, by = c('PharmacologicalAction' = 'DescriptorUI')) |>
+  select(1,3,2,4)
+
+colnames(pharm_actions) <- c('DescriptorUI',
+                             'DescriptorName',
+                             'PharmActionUI',
+                             'PharmActionName')
+```
+
+
+
+
+## descriptor-tree-numbers
+
+```{r}
+temp <- tempdir()
+trees_zip_name <- paste0(temp, '/', basename(trees_url))
+download.file(trees_url, 
+              trees_zip_name,
+              quiet = TRUE)
+
+trees <- trees_zip_name |> gzfile() |> 
+  read.csv(header = FALSE, sep =';') |>
+  rename(DescriptorName = V1,
+         tree_location = V2) |>
+  select(tree_location, DescriptorName)
+
+unlink(temp)
+
+
+# Extract the two highest parent nodes from tree location.  
+## For general classification purposes.  
+level1 <- trees[nchar(trees$tree_location) == 3, ]
+level2 <- trees[nchar(trees$tree_location) == 7, ] |>
+  mutate(join = gsub('\\....', '', tree_location))
+
+top_parents <- level2 |>
+  left_join(level1, by = c('join' = 'tree_location'))
+
+colnames(top_parents) <- c('tree2', 'mesh2', 'tree1', 'mesh1')
+top_parents <- top_parents[, c(3:4, 1:2)]
+
+
+ cats <- c('Anatomy', 
+          'Organisms', 
+          'Diseases', 
+          'Chemicals and Drugs',
+          'Analytical, Diagnostic and Therapeutic Techniques, and Equipment', 
+          'Psychiatry and Psychology', 
+          'Phenomena and Processes',
+          'Disciplines and Occupations',
+          'Anthropology, Education, Sociology, and Social Phenomena', 
+          'Technology, Industry, and Agriculture', 
+          'Humanities',
+          'Information Science',
+          'Named Groups',
+          'Health Care',
+          'Publication Characteristics',
+          'Geographicals')
+
+code <- c(LETTERS[1:14], 'V', 'Z')
+
+high_tree <- data.frame(code, cats)
+
+
+## previously meta -- need to add descriptor names to this -- 
+meta <- top_parents |>
+  mutate(code = gsub('..$', '', tree1)) |>
+  left_join(high_tree) |>
+  select(code:cats, tree1:mesh2) |>
+  data.table::setDT()
+```
+
+
+
+```{r}
+big_tree <- descriptor_terms |>
+  left_join(trees) |>
+  mutate (tree2 = substring(tree_location, 1, 7)) |>
+  
+  left_join(meta) |>
+  
+  select(DescriptorUI, DescriptorName, 
+         tree_location, 
+         code, cats,
+         mesh1, mesh2,
+         tree1, tree2) |>
+  
+  distinct() |>
+  na.omit() |>
+  mutate_if(is.character, trimws)|>
+  mutate_if(is.character, enc2utf8)
+```
+
+
+
+
+## OUTPUT
+
+```{r}
+setwd(out_dir)
+
+saveRDS(big_tree, 'data_mesh_trees.rds')
+saveRDS(descriptor_terms, 'data_mesh_thesaurus.rds')
+saveRDS(supplemental_terms, 'data_scr_thesaurus.rds')
+saveRDS(pharm_actions, 'data_PharmacologicalActions.rds')
+```
+
+
+

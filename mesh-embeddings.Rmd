@@ -34,16 +34,36 @@ rownames(embeddings) <- toupper(gsub('mesh', '', ns))
 ebs1 <- data.table::setDT(embeddings |> data.frame(), 
                           keep.rownames = 'DescriptorUI')[] 
 
-meshE <- ebs1 |> filter(grepl('^D', DescriptorUI))
-scrE <- ebs1 |> filter(grepl('^C', DescriptorUI))
+
+desc <- pubmedr::data_mesh_thesuarus() |>
+  filter(RecordPreferredTermYN == 'Y')
+  
+ebs2 <- ebs1 |> 
+  left_join(desc) |>
+  na.omit() |>
+  select(1, 398, 2:397)
+
+######
+meshE <- ebs2 |> filter(grepl('^D', DescriptorUI))
+mesh_mat <- as.matrix(meshE[, 3:398])
+rownames(mesh_mat) <- meshE$DescriptorName
+
+scrE <- ebs2 |> filter(grepl('^C', DescriptorUI))
+scr_mat <- as.matrix(scrE[, 3:398])
+rownames(scr_mat) <- scrE$DescriptorName
+```
+
+
+```{r}
+ff <- rbind(scr_mat, mesh_mat)
 ```
 
 
 
 ```{r eval=FALSE, include=FALSE}
 setwd('/home/jtimm/pCloudDrive/GitHub/git-projects/mesh-builds/data')
-saveRDS(meshE, 'data_mesh_embeddings.rds')
-saveRDS(scrE, 'data_scr_embeddings.rds')
+saveRDS(mesh_mat, 'data_mesh_embeddings.rds')
+saveRDS(scr_mat, 'data_scr_embeddings.rds')
 ```
 
 

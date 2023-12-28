@@ -1,8 +1,22 @@
 # Some convenient extensions to MeSH
 
+> The MeSH extensions available here include two sets. The first set
+> consists of the MeSH ontology in simple data frame formats, including
+> `Descriptor Terms`, `Supplementary Concept Terms`, and
+> `MeSH Tree Structures`. Additionally, `Pharmacological Actions` have
+> been extracted from both descriptor and supplemental concept files,
+> and aggregated as a single, simple resource as data frame. The R code
+> for XML extraction and restructuring processes is available
+> [here](https://github.com/jaytimm/mesh-builds/blob/main/descriptor-records-trees.Rmd).
+> The second set of MeSH extensions collected here are descriptor-level
+> word embeddings made available by [Noh & Kavuluru
+> (2021)](https://www.sciencedirect.com/science/article/pii/S1532046421001969).
+
+## MeSH ontology
+
 > Based on MeSH files `desc2024`, `mtrees2024` & `supp2024`.
 
-## Datasets
+> Files used in the R package `pubmedtk`.
 
 ### `descriptor-terms`
 
@@ -61,7 +75,7 @@ readRDS('data/data_scr_thesaurus.rds') |>
 | C002540      | miracil A                                | M0043189  | T073192 | miracil A                                | Y                      | N                | NON        | Y                     |
 | C055240      | Leakadine                                | M0155620  | T185625 | Leakadine                                | Y                      | N                | TRD        | Y                     |
 
-## Pharmacological Actions
+### Pharmacological Actions
 
 > For drugs included in both MeSH-proper and Supplementary Concept
 > Records.
@@ -80,7 +94,7 @@ readRDS('data/data_pharm_action.rds') |>
 | D000068180   | Aripiprazole   | D000928       | Antidepressive Agents   |
 | D000068180   | Aripiprazole   | D014150       | Antipsychotic Agents    |
 
-## Notes & useful links:
+### Notes & useful links:
 
 -   [MeSH XML data
     elements](https://www.nlm.nih.gov/mesh/xml_data_elements.html)
@@ -103,3 +117,24 @@ readRDS('data/data_pharm_action.rds') |>
 > used for indexing MEDLINE articles; instead they enlarge the thesaurus
 > and contain links to the closest fitting descriptor to be used in a
 > MEDLINE search. Many of these records describe chemical substances.’
+
+## Descriptor embeddings
+
+December 21, 2020 Other Open Access BERT-CRel: Improved Biomedical Word
+Embeddings in the Transformer Era
+
+<https://zenodo.org/record/4383195#.Y1wDBb7MJhE>
+
+> BERT-CRel is a transformer model for fine-tuning biomedical word
+> embeddings that are jointly learned along with concept embeddings
+> using a pre-training phase with fastText and a fine-tuning phase with
+> a transformer setup. The goal is to provide high quality pre-trained
+> biomedical embeddings that can be used in any `downstream task` by the
+> research community. The corpus used for BERT-CRel contains biomedical
+> citations from PubMed and the concepts are from the Medical Subject
+> Headings (MeSH codes) terminology used to index citations.
+
+``` r
+readRDS('data_scr_embeddings.rds')
+readRDS('data_mesh_embeddings.rds')
+```

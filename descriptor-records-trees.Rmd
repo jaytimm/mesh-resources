@@ -91,6 +91,8 @@ descriptor_terms <- term |>
 ```
 
 
+
+
 ## supplemental-terms
 
 > Note: `descriptor-terms` + `supplemental-terms` happens in script -- 
@@ -334,6 +336,52 @@ big_tree <- descriptor_terms |>
 
 
 
+## Embeddings
+
+```{r}
+file_path = '/home/jtimm/pCloudDrive/nlp/BERT-CRel-meshes.vec'
+## file_path <- 'https://zenodo.org/record/4383195/files/BERT-CRel-meshes.vec?download=1'
+
+options(timeout = 500)
+lines <- readLines(file_path)
+embeddings <- matrix(nrow = 45015, ncol = 396)
+ns <- vector()
+
+for (i in 2:length(lines)) {
+    line <- lines[[i]]
+    values <- strsplit(line, " ")[[1]]
+    label <- values[[1]]
+    embeddings[i-1, ] <- as.double(values[-1])
+    ns[i-1] <- label
+}
+
+rownames(embeddings) <- toupper(gsub('mesh', '', ns))
+
+ebs1 <- data.table::setDT(embeddings |> data.frame(), 
+                          keep.rownames = 'DescriptorUI')[] 
+
+
+desc <- pubmedr::data_mesh_thesuarus() |>
+  filter(RecordPreferredTermYN == 'Y')
+  
+ebs2 <- ebs1 |> 
+  left_join(desc) |>
+  na.omit() |>
+  select(1, 398, 2:397)
+
+######
+meshE <- ebs2 |> filter(grepl('^D', DescriptorUI))
+mesh_mat <- as.matrix(meshE[, 3:398])
+rownames(mesh_mat) <- meshE$DescriptorName
+
+scrE <- ebs2 |> filter(grepl('^C', DescriptorUI))
+scr_mat <- as.matrix(scrE[, 3:398])
+rownames(scr_mat) <- scrE$DescriptorName
+```
+
+
+
+
 
 ## OUTPUT
 
@@ -344,6 +392,9 @@ saveRDS(big_tree, 'data_mesh_trees.rds')
 saveRDS(descriptor_terms, 'data_mesh_thesaurus.rds')
 saveRDS(supplemental_terms, 'data_scr_thesaurus.rds')
 saveRDS(pharm_actions, 'data_PharmacologicalActions.rds')
+
+saveRDS(mesh_mat, 'data_mesh_embeddings.rds')
+saveRDS(scr_mat, 'data_scr_embeddings.rds')
 ```
 
 

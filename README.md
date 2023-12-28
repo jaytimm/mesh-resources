@@ -125,16 +125,16 @@ Embeddings in the Transformer Era
 
 <https://zenodo.org/record/4383195#.Y1wDBb7MJhE>
 
-> BERT-CRel is a transformer model for fine-tuning biomedical word
+> “BERT-CRel is a transformer model for fine-tuning biomedical word
 > embeddings that are jointly learned along with concept embeddings
 > using a pre-training phase with fastText and a fine-tuning phase with
 > a transformer setup. The goal is to provide high quality pre-trained
 > biomedical embeddings that can be used in any `downstream task` by the
 > research community. The corpus used for BERT-CRel contains biomedical
 > citations from PubMed and the concepts are from the Medical Subject
-> Headings (MeSH codes) terminology used to index citations.
+> Headings (MeSH codes) terminology used to index citations.”
 
 ``` r
-readRDS('data_scr_embeddings.rds')
-readRDS('data_mesh_embeddings.rds')
+readRDS('data/data_scr_embeddings.rds')
+readRDS('data/data_mesh_embeddings.rds')
 ```

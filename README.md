@@ -12,11 +12,11 @@
 > word embeddings made available by [Noh & Kavuluru
 > (2021)](https://www.sciencedirect.com/science/article/pii/S1532046421001969).
 
+> Files used in the R package `pubmedtk`.
+
 ## MeSH ontology
 
 > Based on MeSH files `desc2024`, `mtrees2024` & `supp2024`.
-
-> Files used in the R package `pubmedtk`.
 
 ### `descriptor-terms`
 

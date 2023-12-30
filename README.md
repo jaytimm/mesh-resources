@@ -5,8 +5,8 @@ A simple library that makes available the Medical Subject Headings
 for both Descriptor Records and Supplementary Concept Records are
 included. Pharmacological Actions have have been extracted from both
 descriptor and supplementary concept files, and collated in a single
-table. Lastly, descriptor-level word emebddings derived by [Noh &
-Kavuluru
+table. Lastly, descriptor-level word embeddings derived in/made
+available by [Noh & Kavuluru
 (2021)](https://www.sciencedirect.com/science/article/pii/S1532046421001969)
 are included. The R code for XML extraction and restructuring processes
 is available

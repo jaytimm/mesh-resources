@@ -1,18 +1,18 @@
-# Some convenient extensions to MeSH
+# A more accessible MeSH
 
-> The MeSH extensions available here include two sets. The first set
-> consists of the MeSH ontology in simple data frame formats, including
-> `Descriptor Terms`, `Supplementary Concept Terms`, and
-> `MeSH Tree Structures`. Additionally, `Pharmacological Actions` have
-> been extracted from both descriptor and supplemental concept files,
-> and aggregated as a single, simple resource as data frame. The R code
-> for XML extraction and restructuring processes is available
-> [here](https://github.com/jaytimm/mesh-builds/blob/main/descriptor-records-trees.Rmd).
-> The second set of MeSH extensions collected here are descriptor-level
-> word embeddings made available by [Noh & Kavuluru
-> (2021)](https://www.sciencedirect.com/science/article/pii/S1532046421001969).
-
-> Files used in the R package `pubmedtk`.
+A simple library that makes available the Medical Subject Headings
+(MeSH) vocabulary and tree structure in simple data frame format. Tables
+for both Descriptor Records and Supplementary Concept Records are
+included. Pharmacological Actions have have been extracted from both
+descriptor and supplementary concept files, and collated in a single
+table. Lastly, descriptor-level word emebddings derived by [Noh &
+Kavuluru
+(2021)](https://www.sciencedirect.com/science/article/pii/S1532046421001969)
+are included. The R code for XML extraction and restructuring processes
+is available
+[here](https://github.com/jaytimm/mesh-builds/blob/main/descriptor-records-trees.Rmd).
+These data are utilitzed in the R package
+[pubmedtk](https://github.com/jaytimm/pubmedtk).
 
 ## MeSH ontology
 

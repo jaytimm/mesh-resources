@@ -120,8 +120,8 @@ readRDS('data/data_pharm_action.rds') |>
 
 ## Descriptor embeddings
 
-December 21, 2020 Other Open Access BERT-CRel: Improved Biomedical Word
-Embeddings in the Transformer Era
+> Noh, J., & Kavuluru, R. (2021). Improved biomedical word embeddings in
+> the transformer era. Journal of Biomedical Informatics, 120, 103867.
 
 <https://zenodo.org/record/4383195#.Y1wDBb7MJhE>
 

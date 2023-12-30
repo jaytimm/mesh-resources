@@ -1,4 +1,4 @@
-# A more accessible MeSH
+# Some MeSH resources
 
 A simple library that makes available the Medical Subject Headings
 (MeSH) vocabulary and tree structure in simple data frame format. Tables

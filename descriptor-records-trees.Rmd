@@ -10,12 +10,13 @@ editor_options:
 
 ```{r}
 library(dplyr)
-out_dir <- '/home/jtimm/pCloudDrive/GitHub/packages/mesh-builds/data'
-year <- 2024
+out_dir <- file.path(getwd(), "data")
+if (!dir.exists(out_dir)) dir.create(out_dir, recursive = TRUE)
+year <- 2026
 
 desc_url <- paste0('https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/desc', year, '.gz')
 supp_url <- paste0('https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/xmlmesh/supp', year, '.gz')
-trees_url <- paste0('https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/meshtrees/mtrees', year, '.bin')
+trees_url <- paste0('https://nlmpubs.nlm.nih.gov/projects/mesh/MESH_FILES/newterms/mtrees', year, '.bin')
 ```
 
 
@@ -195,63 +196,6 @@ colnames(supplemental_terms) <- colnames(descriptor_terms)
 
 
 
-## pharmacological-actions
-
-```{r}
-library(xml2)
-
-sr1 <- SupplementalRecord |> 
-  xml2::xml_find_all('.//PharmacologicalActionList') 
-
-srps <- sr1 |> xml2::xml_parents() 
-
-srps0 <- srps |>
-  xml2::xml_find_first('.//SupplementalRecordUI') |>  
-  xml2::xml_text()
-
-names(srps) <- srps0
-
-srps2 <- srps |>
-  xml2::xml_find_first('.//PharmacologicalActionList')
-
-xx <- lapply(srps2, function(x) {
-  xml2::xml_find_all(x, './/DescriptorUI') |> xml2::xml_text()
-})
-
-
-## this is good -- 
-DescriptorRecord <- desc |> 
-  xml2::xml_find_all('.//DescriptorRecord')
-names(DescriptorRecord) <- descriptor99$DescriptorUI
-dr1 <- DescriptorRecord |>
-  xml2::xml_find_all('.//PharmacologicalActionList') 
-
-xx1 <- lapply(dr1, function(x) {
-  xml2::xml_find_all(x, './/DescriptorUI') |> xml2::xml_text()
-})
-
-
-# mesh <- pubmedr::data_mesh_thesuarus() |>
-#   select(DescriptorName, DescriptorUI) |>
-#   unique()
-
-pharm_actions <- textshape::tidy_list(c(xx1, xx),
-                                      id.name = 'DescriptorUI',
-                                      content.name = 'PharmacologicalAction') |> 
-  
-  left_join(descriptor99, by = c('DescriptorUI')) |>
-  left_join(descriptor99, by = c('PharmacologicalAction' = 'DescriptorUI')) |>
-  select(1,3,2,4)
-
-colnames(pharm_actions) <- c('DescriptorUI',
-                             'DescriptorName',
-                             'PharmActionUI',
-                             'PharmActionName')
-```
-
-
-
-
 ## descriptor-tree-numbers
 
 ```{r}
@@ -259,12 +203,14 @@ temp <- tempdir()
 trees_zip_name <- paste0(temp, '/', basename(trees_url))
 download.file(trees_url, 
               trees_zip_name,
+              mode = "wb",
               quiet = TRUE)
 
-trees <- trees_zip_name |> gzfile() |> 
-  read.csv(header = FALSE, sep =';') |>
+trees <- read.csv(trees_zip_name, header = FALSE, sep =';') |>
   rename(DescriptorName = V1,
          tree_location = V2) |>
+  mutate(DescriptorName = trimws(DescriptorName),
+         tree_location = trimws(tree_location)) |>
   select(tree_location, DescriptorName)
 
 unlink(temp)
@@ -336,65 +282,12 @@ big_tree <- descriptor_terms |>
 
 
 
-## Embeddings
-
-```{r}
-file_path = '/home/jtimm/pCloudDrive/nlp/BERT-CRel-meshes.vec'
-## file_path <- 'https://zenodo.org/record/4383195/files/BERT-CRel-meshes.vec?download=1'
-
-options(timeout = 500)
-lines <- readLines(file_path)
-embeddings <- matrix(nrow = 45015, ncol = 396)
-ns <- vector()
-
-for (i in 2:length(lines)) {
-    line <- lines[[i]]
-    values <- strsplit(line, " ")[[1]]
-    label <- values[[1]]
-    embeddings[i-1, ] <- as.double(values[-1])
-    ns[i-1] <- label
-}
-
-rownames(embeddings) <- toupper(gsub('mesh', '', ns))
-
-ebs1 <- data.table::setDT(embeddings |> data.frame(), 
-                          keep.rownames = 'DescriptorUI')[] 
-
-
-desc <- pubmedr::data_mesh_thesuarus() |>
-  filter(RecordPreferredTermYN == 'Y')
-  
-ebs2 <- ebs1 |> 
-  left_join(desc) |>
-  na.omit() |>
-  select(1, 398, 2:397)
-
-######
-meshE <- ebs2 |> filter(grepl('^D', DescriptorUI))
-mesh_mat <- as.matrix(meshE[, 3:398])
-rownames(mesh_mat) <- meshE$DescriptorName
-
-scrE <- ebs2 |> filter(grepl('^C', DescriptorUI))
-scr_mat <- as.matrix(scrE[, 3:398])
-rownames(scr_mat) <- scrE$DescriptorName
-```
-
-
-
-
-
 ## OUTPUT
 
 ```{r}
-setwd(out_dir)
-
-saveRDS(big_tree, 'data_mesh_trees.rds')
-saveRDS(descriptor_terms, 'data_mesh_thesaurus.rds')
-saveRDS(supplemental_terms, 'data_scr_thesaurus.rds')
-saveRDS(pharm_actions, 'data_PharmacologicalActions.rds')
-
-saveRDS(mesh_mat, 'data_mesh_embeddings.rds')
-saveRDS(scr_mat, 'data_scr_embeddings.rds')
+saveRDS(big_tree, file.path(out_dir, "data_mesh_trees.rds"))
+saveRDS(descriptor_terms, file.path(out_dir, "data_mesh_thesaurus.rds"))
+saveRDS(supplemental_terms, file.path(out_dir, "data_scr_thesaurus.rds"))
 ```
 
 

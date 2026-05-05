@@ -1,22 +1,17 @@
-# Some MeSH resources
+# MeSH resources (2026 update)
 
-A simple library that makes available the Medical Subject Headings
-(MeSH) vocabulary and tree structure in simple data frame format. Tables
-for both Descriptor Records and Supplementary Concept Records are
-included. Pharmacological Actions have have been extracted from both
-descriptor and supplementary concept files, and collated in a single
-table. Lastly, descriptor-level word embeddings derived in/made
-available by [Noh & Kavuluru
-(2021)](https://www.sciencedirect.com/science/article/pii/S1532046421001969)
-are included. The R code for XML extraction and restructuring processes
-is available
+**May 2026 update:** this repo now maintains only the core tables used
+by `puremoe`: Descriptor Terms, Supplementary Concept Terms, and MeSH
+Tree Structures.
+
+The R code for XML extraction and restructuring processes is available
 [here](https://github.com/jaytimm/mesh-builds/blob/main/descriptor-records-trees.Rmd).
-These data are utilitzed in the R package
-[pubmedtk](https://github.com/jaytimm/pubmedtk).
+These data are utilized in the R package
+[puremoe](https://github.com/jaytimm/puremoe).
 
 ## MeSH ontology
 
-> Based on MeSH files `desc2024`, `mtrees2024` & `supp2024`.
+> Based on MeSH files `desc2026`, `mtrees2026` & `supp2026`.
 
 ### `descriptor-terms`
 
@@ -75,24 +70,12 @@ readRDS('data/data_scr_thesaurus.rds') |>
 | C002540      | miracil A                                | M0043189  | T073192 | miracil A                                | Y                      | N                | NON        | Y                     |
 | C055240      | Leakadine                                | M0155620  | T185625 | Leakadine                                | Y                      | N                | TRD        | Y                     |
 
-### Pharmacological Actions
-
-> For drugs included in both MeSH-proper and Supplementary Concept
-> Records.
+## Maintained outputs
 
 ``` r
-readRDS('data/data_pharm_action.rds') |>
-  head() |> knitr::kable()
+list.files('data', pattern = 'data_.*\\.rds$')
+# [1] "data_mesh_thesaurus.rds" "data_mesh_trees.rds" "data_scr_thesaurus.rds"
 ```
-
-| DescriptorUI | DescriptorName | PharmActionUI | PharmActionName         |
-|:-------------|:---------------|:--------------|:------------------------|
-| D000001      | Calcimycin     | D000900       | Anti-Bacterial Agents   |
-| D000001      | Calcimycin     | D061207       | Calcium Ionophores      |
-| D000002      | Temefos        | D007306       | Insecticides            |
-| D000040      | Abscisic Acid  | D010937       | Plant Growth Regulators |
-| D000068180   | Aripiprazole   | D000928       | Antidepressive Agents   |
-| D000068180   | Aripiprazole   | D014150       | Antipsychotic Agents    |
 
 ### Notes & useful links:
 
@@ -118,23 +101,3 @@ readRDS('data/data_pharm_action.rds') |>
 > and contain links to the closest fitting descriptor to be used in a
 > MEDLINE search. Many of these records describe chemical substances.’
 
-## Descriptor embeddings
-
-> Noh, J., & Kavuluru, R. (2021). Improved biomedical word embeddings in
-> the transformer era. Journal of Biomedical Informatics, 120, 103867.
-
-<https://zenodo.org/record/4383195#.Y1wDBb7MJhE>
-
-> “BERT-CRel is a transformer model for fine-tuning biomedical word
-> embeddings that are jointly learned along with concept embeddings
-> using a pre-training phase with fastText and a fine-tuning phase with
-> a transformer setup. The goal is to provide high quality pre-trained
-> biomedical embeddings that can be used in any `downstream task` by the
-> research community. The corpus used for BERT-CRel contains biomedical
-> citations from PubMed and the concepts are from the Medical Subject
-> Headings (MeSH codes) terminology used to index citations.”
-
-``` r
-readRDS('data/data_scr_embeddings.rds')
-readRDS('data/data_mesh_embeddings.rds')
-```

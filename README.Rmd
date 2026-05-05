@@ -7,9 +7,9 @@ output:
 
 # MeSH resources (2026 update)
 
-> **May 2026 update:** this repo now maintains only the core tables used by `puremoe`: `Descriptor Terms`, `Supplementary Concept Terms`, and `MeSH Tree Structures`.
+> **mesh-builds** turns NLM MeSH XML and tree files into three R-ready tables: a **descriptor thesaurus** (terms and concepts), a **supplementary concept thesaurus** (SCR terms), and a **tree table** that links descriptors to tree numbers and high-level category labels. The pipeline is in [`descriptor-records-trees.Rmd`](https://github.com/jaytimm/mesh-builds/blob/main/descriptor-records-trees.Rmd); the RDS outputs power the R package [**puremoe**](https://github.com/jaytimm/puremoe).
 
-> The R code for XML extraction and restructuring processes is available [here](https://github.com/jaytimm/mesh-builds/blob/main/descriptor-records-trees.Rmd). These data are utilized in the R package [puremoe](https://github.com/jaytimm/puremoe).
+> **May 2026:** built from MeSH `desc2026`, `supp2026`, and `mtrees2026` (newterms release).
 
 
 
